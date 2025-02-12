@@ -5,12 +5,13 @@ import { getLatestProducts } from "@/lib/actions/product.actions";
 const Homepage = async () => {
   // console.log(sampleData);
   const products = await getLatestProducts(); // get the latest Data from the database
+  const safeProducts = products.map(p => ({
+    ...p,
+    numReviews: p.numReviews ?? 0
+  }));
   return (
     <>
-      <ProductList
-        data={products}
-        title="Newest Arrivals"
-      />
+      <ProductList data={safeProducts} title="Newest Arrivals" limit={4} />
     </>
   );
 };
