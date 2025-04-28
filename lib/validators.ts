@@ -3,6 +3,11 @@
 import { z } from "zod";
 import { formatNumberWithDecimal } from "./utils";
 
+const Currency = z.string().refine(
+  (val) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(val))),
+  "Price must have exactly two decimal places" // "refine" allows custom validation logic 'regex' in this case
+);
+
 // Schema for inserting products
 export const insertProductSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -15,7 +20,11 @@ export const insertProductSchema = z.object({
   isFeatured: z.boolean(),
   banner: z.string().nullable(), // nullable string
   // banner: z.string().optional(), // optional string
-  price: z.string().refine(
-    (val) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(val))) // "refine" allows custom validation logic 'regex' in this case
-  ),
+  price: Currency,
+});
+
+// Schema for signing users in
+export const signInSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
