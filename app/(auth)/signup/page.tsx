@@ -9,15 +9,15 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { APP_NAME } from "@/lib/constants";
-import CredentialsSignInForm from "./credentials-signin-form";
-import { auth } from "@/lib/auth"
+import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import CredentialsSignInForm from "../signin/credentials-signin-form";
 
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
-const SignInPage = async ({
+const SignUpPage = async ({
   searchParams,
 }: {
   searchParams?: { callbackUrl?: string };
@@ -54,4 +54,4 @@ const SignInPage = async ({
   );
 };
 
-export default SignInPage;
+export default SignUpPage;
